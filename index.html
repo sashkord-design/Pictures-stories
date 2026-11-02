@@ -68,10 +68,10 @@
       background: #1a1a1a url('kitchen.jpg') center/contain no-repeat;
     }
 
-    /* Інтерактивні точки (Hotspots) */
+    /* Інтерактивні точки (Hotspots) — виправлені координати */
     .hotspot {
       position: absolute;
-      border: 2px dashed rgba(255, 215, 0, 0.5);
+      border: 2px dashed rgba(255, 215, 0, 0.6);
       border-radius: 8px;
       cursor: pointer;
       background: rgba(255, 215, 0, 0.08);
@@ -85,13 +85,13 @@
       transform: scale(1.02);
     }
 
-    /* 6 клікабельних зон */
-    #bread   { top: 68%; left: 54%; width: 14%; height: 12%; }
-    #cat     { top: 62%; left: 28%; width: 10%; height: 12%; }
-    #cup     { top: 65%; left: 48%; width: 6%;  height: 9%;  }
-    #grinder { top: 60%; left: 78%; width: 8%;  height: 14%; }
-    #oranges { top: 58%; left: 65%; width: 10%; height: 11%; }
-    #kettle  { top: 48%; left: 57%; width: 8%;  height: 10%; }
+    /* Точні позиції для нової картинки */
+    #cat     { top: 62%; left: 16%; width: 15%; height: 26%; } /* Кіт на стільці */
+    #kettle  { top: 25%; left: 27%; width: 9%;  height: 20%; } /* Чайник на плиті */
+    #cup     { top: 51%; left: 47%; width: 10%; height: 16%; } /* Чашка чаю */
+    #bread   { top: 49%; left: 63%; width: 14%; height: 18%; } /* Хліб на дошці */
+    #oranges { top: 41%; left: 74%; width: 11%; height: 18%; } /* Ваза з фруктами */
+    #grinder { top: 38%; left: 86%; width: 10%; height: 26%; } /* Кавомолка */
 
     .subtitle-panel {
       background: #181818;
@@ -164,13 +164,13 @@
 
   <div class="app-container">
     <div class="canvas-container">
-      <!-- 6 предметів для натискання -->
-      <div class="hotspot" id="bread" title="Click for a memory"></div>
+      <!-- 6 чітко розташованих предметів -->
       <div class="hotspot" id="cat" title="Click for a memory"></div>
-      <div class="hotspot" id="cup" title="Click for a memory"></div>
-      <div class="hotspot" id="grinder" title="Click for a memory"></div>
-      <div class="hotspot" id="oranges" title="Click for a memory"></div>
       <div class="hotspot" id="kettle" title="Click for a memory"></div>
+      <div class="hotspot" id="cup" title="Click for a memory"></div>
+      <div class="hotspot" id="bread" title="Click for a memory"></div>
+      <div class="hotspot" id="oranges" title="Click for a memory"></div>
+      <div class="hotspot" id="grinder" title="Click for a memory"></div>
     </div>
 
     <div class="subtitle-panel">
@@ -187,14 +187,13 @@
   </div>
 
   <script>
-    // 6 різних англомовних спогадів
     const memories = {
-      bread: "I can still smell the aroma of my grandmother's fresh-baked bread on early, crisp mornings. She always said it was the warmth, not the recipe, that made it perfect.",
       cat: "The old cat used to sit on that exact wooden chair all afternoon, chasing patches of sunlight as they moved across the floor.",
+      kettle: "That iron kettle has a quiet whistle that always reminded me of winter evenings spent by the warm stove.",
       cup: "This cup of hot tea cooled down while I got lost reading an old letter from a friend I hadn't seen in years.",
-      grinder: "Every Sunday morning began with the rhythmic crunching sound of this hand coffee grinder filling the house with fresh roasted scent.",
+      bread: "I can still smell the aroma of my grandmother's fresh-baked bread on early, crisp mornings. She always said it was the warmth, not the recipe, that made it perfect.",
       oranges: "We bought these sweet oranges from a small street vendor near the harbor right after the rain had finally stopped.",
-      kettle: "That iron kettle has a quiet whistle that always reminded me of winter evenings spent by the warm stove."
+      grinder: "Every Sunday morning began with the rhythmic crunching sound of this hand coffee grinder filling the house with fresh roasted scent."
     };
 
     let currentText = "";
