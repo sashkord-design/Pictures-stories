@@ -91,36 +91,36 @@
     #oranges  { top: 33%; left: 83%; width: 14%; height: 18%; }
 
     /* ==========================================
-       АНІМАЦІЇ
+       ВИПРАВЛЕНІ АНІМАЦІЇ
        ========================================== */
 
-    /* 1. Дихання кота (плавне м'яке пульсування поверх тіла кота) */
-    .cat-breath-overlay {
+    /* 1. Помітне дихання кота (плавне підняття тулуба) */
+    .cat-breathing {
       position: absolute;
-      top: 66%;
-      left: 15%;
-      width: 15%;
-      height: 18%;
+      top: 72%;
+      left: 17%;
+      width: 11%;
+      height: 13%;
+      background: rgba(210, 180, 140, 0.15); /* М'який теплий відтінок на шерсть */
       border-radius: 50%;
-      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.12);
+      filter: blur(8px);
       pointer-events: none;
-      animation: catBreathe 3.2s ease-in-out infinite;
-      z-index: 3;
+      animation: catBreathAnim 3.5s ease-in-out infinite;
+      z-index: 2;
     }
 
-    @keyframes catBreathe {
-      0%, 100% { transform: scale(1) translateY(0); opacity: 0.2; }
-      50%      { transform: scale(1.05) translateY(-2px); opacity: 0.45; }
+    @keyframes catBreathAnim {
+      0%, 100% { transform: scale(1) translateY(0); opacity: 0.3; }
+      50%      { transform: scale(1.12) translateY(-4px); opacity: 0.7; }
     }
 
-    /* 2. Загальний клас для пари */
+    /* 2. Пара з чайника та чашки */
     .steam-container {
       position: absolute;
       pointer-events: none;
       z-index: 5;
     }
 
-    /* Пара з чайника */
     .kettle-steam {
       top: 21%;
       left: 28.5%;
@@ -128,10 +128,9 @@
       height: 45px;
     }
 
-    /* Пара з чашки */
     .cup-steam {
-      top: 27%;
-      left: 50.5%;
+      top: 26%;
+      left: 50.3%;
       width: 16px;
       height: 35px;
     }
@@ -139,18 +138,18 @@
     .steam-particle {
       position: absolute;
       bottom: 0;
-      width: 6px;
-      height: 20px;
-      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 75%);
+      width: 7px;
+      height: 22px;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 75%);
       border-radius: 50%;
       filter: blur(2px);
-      animation: riseAndFade 2.6s infinite ease-out;
+      animation: riseAndFade 2.8s infinite ease-out;
       opacity: 0;
     }
 
-    .steam-particle:nth-child(1) { left: 2px;  animation-delay: 0s; }
-    .steam-particle:nth-child(2) { left: 8px;  animation-delay: 0.9s; }
-    .steam-particle:nth-child(3) { left: 5px;  animation-delay: 1.7s; }
+    .steam-particle:nth-child(1) { left: 1px;  animation-delay: 0s; }
+    .steam-particle:nth-child(2) { left: 8px;  animation-delay: 1s; }
+    .steam-particle:nth-child(3) { left: 4px;  animation-delay: 1.8s; }
 
     @keyframes riseAndFade {
       0% {
@@ -158,48 +157,48 @@
         opacity: 0;
       }
       25% {
-        opacity: 0.6;
+        opacity: 0.65;
       }
       100% {
-        transform: translateY(-35px) scaleX(2.4);
+        transform: translateY(-38px) scaleX(2.2);
         opacity: 0;
       }
     }
 
-    /* 3. Зона вікна (щоб пташка пролітала виключно в межах скла) */
-    .window-area {
+    /* 3. Суворе обмеження вікна для пташки (тепер вона не вилітає в кімнату) */
+    .window-frame-clip {
       position: absolute;
       top: 0%;
-      left: 70%;
-      width: 30%;
-      height: 45%;
+      left: 74%;
+      width: 18%;
+      height: 35%;
       overflow: hidden;
       pointer-events: none;
-      z-index: 1;
+      z-index: 4;
     }
 
     .bird {
       position: absolute;
-      top: 35%;
-      right: -25px;
-      width: 16px;
-      height: 10px;
+      top: 40%;
+      right: -30px;
+      width: 14px;
+      height: 9px;
       opacity: 0;
     }
 
     .bird-fly {
-      animation: flyInWindow 4.5s linear forwards;
+      animation: flyInStrictWindow 4s linear forwards;
     }
 
-    @keyframes flyInWindow {
+    @keyframes flyInStrictWindow {
       0% {
-        transform: translateX(0) translateY(0) scale(0.6);
+        transform: translateX(0) translateY(0) scale(0.5);
         opacity: 0;
       }
-      15% { opacity: 0.7; }
-      85% { opacity: 0.7; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
       100% {
-        transform: translateX(-220px) translateY(-20px) scale(0.5);
+        transform: translateX(-130px) translateY(-10px) scale(0.4);
         opacity: 0;
       }
     }
@@ -276,15 +275,15 @@
   <div class="app-container">
     <div class="canvas-container">
       
-      <!-- Зона вікна для пташки -->
-      <div class="window-area">
-        <svg class="bird" id="birdSvg" viewBox="0 0 24 16" fill="rgba(40, 50, 60, 0.75)">
+      <!-- Пташка тепер летить виключно у віконній рамці -->
+      <div class="window-frame-clip">
+        <svg class="bird" id="birdSvg" viewBox="0 0 24 16" fill="rgba(35, 45, 55, 0.85)">
           <path d="M0,6 Q6,0 12,6 Q18,0 24,6 Q16,10 12,14 Q8,10 0,6 Z"/>
         </svg>
       </div>
 
-      <!-- Ефект дихання кота -->
-      <div class="cat-breath-overlay"></div>
+      <!-- Дихання кота -->
+      <div class="cat-breathing"></div>
 
       <!-- Пара з чайника -->
       <div class="steam-container kettle-steam">
@@ -383,14 +382,14 @@
       if (currentText) playMemory(currentText);
     });
 
-    // Запуск польоту пташки суто за вікном
+    // Польоти пташки суто за склом
     const bird = document.getElementById('birdSvg');
     function triggerBirdFlight() {
       bird.classList.remove('bird-fly');
       void bird.offsetWidth; 
       bird.classList.add('bird-fly');
 
-      const randomDelay = Math.floor(Math.random() * 6000) + 10000;
+      const randomDelay = Math.floor(Math.random() * 5000) + 9000;
       setTimeout(triggerBirdFlight, randomDelay);
     }
 
