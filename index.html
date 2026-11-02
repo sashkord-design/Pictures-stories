@@ -13,114 +13,118 @@
     }
 
     body {
-      background-color: #1a1a1a;
-      color: #fff;
+      background-color: #141414;
+      color: #f0f0f0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
+      padding: 20px;
     }
 
     /* Навігаційна шапка */
     header {
       width: 100%;
-      max-width: 1000px;
+      max-width: 900px;
       padding: 12px 20px;
-      background: rgba(0, 0, 0, 0.6);
+      background: #1f1f1f;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-radius: 8px 8px 0 0;
+      border-radius: 12px 12px 0 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .nav-btn {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 6px 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       transition: background 0.2s;
+      font-size: 0.9rem;
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* Основний контейнер для картини */
+    .app-container {
+      width: 100%;
+      max-width: 900px;
+      background: #1f1f1f;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
     .canvas-container {
       position: relative;
       width: 100%;
-      max-width: 1000px;
-      height: 562px; /* Співвідношення 16:9 */
-      background: #2a2a2a url('kitchen.jpg') center/cover no-repeat;
-      border-radius: 0 0 8px 8px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      height: 500px; /* Фіксована комфортна висота, щоб бачити всю картину */
+      background: #2a2a2a url('kitchen.jpg') center/contain no-repeat;
+      background-color: #1a1a1a;
     }
 
     /* Інтерактивні точки (Hotspots) */
     .hotspot {
       position: absolute;
-      border: 2px dashed rgba(255, 215, 0, 0.6);
+      border: 2px dashed rgba(255, 215, 0, 0.5);
       border-radius: 8px;
       cursor: pointer;
-      background: rgba(255, 215, 0, 0.1);
+      background: rgba(255, 215, 0, 0.08);
       transition: all 0.3s ease;
     }
 
     .hotspot:hover {
       border-color: #ffd700;
       background: rgba(255, 215, 0, 0.25);
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
       transform: scale(1.02);
     }
 
-    /* Позиціонування зон на карті (у відсотках) */
+    /* Позиціонування зон на карті */
     #bread { top: 68%; left: 55%; width: 14%; height: 12%; }
     #cat { top: 62%; left: 28%; width: 10%; height: 12%; }
     #cup { top: 65%; left: 48%; width: 6%; height: 9%; }
 
-    /* Панель субтитрів та плеєра */
+    /* Панель субтитрів та плеєра (знизу картини, на темному фоні) */
     .subtitle-panel {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 800px;
-      background: rgba(20, 20, 20, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      padding: 16px 20px;
+      background: #181818;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .subtitle-content {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
     }
 
     .avatar {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: #4a5568;
+      background: #2d3748;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
+      flex-shrink: 0;
     }
 
     .text-box {
       flex: 1;
-      font-size: 1.05rem;
-      line-height: 1.4;
+      font-size: 1.1rem;
+      line-height: 1.5;
       color: #e2e8f0;
       min-height: 48px;
     }
@@ -128,34 +132,27 @@
     /* Контроли плеєра */
     .controls {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 8px;
-      font-size: 0.85rem;
-    }
-
-    .controls-left, .controls-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
     }
 
     .play-btn {
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 1.2rem;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
     }
 
-    select, button.speed-btn {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
+    .play-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
@@ -167,73 +164,57 @@
     <button class="nav-btn">Next Scene (Beach) ›</button>
   </header>
 
-  <div class="canvas-container">
-    <!-- Клікабельні предмети -->
-    <div class="hotspot" id="bread" title="Click to hear a memory about the bread"></div>
-    <div class="hotspot" id="cat" title="Click to hear a memory about the cat"></div>
-    <div class="hotspot" id="cup" title="Click to hear a memory about the tea"></div>
+  <div class="app-container">
+    <div class="canvas-container">
+      <!-- Клікабельні предмети -->
+      <div class="hotspot" id="bread" title="Click for a memory"></div>
+      <div class="hotspot" id="cat" title="Click for a memory"></div>
+      <div class="hotspot" id="cup" title="Click for a memory"></div>
+    </div>
 
-    <!-- Панель історії / аудіо -->
+    <!-- Панель історії / аудіо знизу -->
     <div class="subtitle-panel">
       <div class="subtitle-content">
         <div class="avatar">🎙️</div>
         <div class="text-box" id="captionText">
-          Click on any item in the kitchen to hear a story...
+          Click on any item in the kitchen to listen to a memory...
         </div>
       </div>
       <div class="controls">
-        <div class="controls-left">
-          <button class="play-btn" id="replayBtn">▶ Repeat</button>
-          <span>Speed:</span>
-          <button class="speed-btn" id="speedToggle">1x</button>
-        </div>
-        <div class="controls-right">
-          <label for="voiceSelect">Voice:</label>
-          <select id="voiceSelect"></select>
-        </div>
+        <button class="play-btn" id="replayBtn">▶ Repeat Audio</button>
       </div>
     </div>
   </div>
 
   <script>
-    // База даних спогадів для предметів
     const memories = {
       bread: "I can still smell the aroma of my grandmother's fresh-baked bread on early, crisp mornings. She always said it was the warmth, not the recipe, that made it perfect.",
       cat: "The old cat used to sit on that exact wooden chair all afternoon, chasing patches of sunlight as they moved across the floor.",
       cup: "This cup of hot tea cooled down while I got lost reading an old letter from a friend I hadn't seen in years."
     };
 
-    let currentSpeed = 1.0;
     let currentText = "";
     const captionEl = document.getElementById('captionText');
-    const voiceSelect = document.getElementById('voiceSelect');
-    const speedBtn = document.getElementById('speedToggle');
     const replayBtn = document.getElementById('replayBtn');
 
-    // Налаштування Web Speech API (Text-to-Speech)
     const synth = window.speechSynthesis;
-    let voices = [];
+    let selectedVoice = null;
 
-    function populateVoiceList() {
-      voices = synth.getVoices().filter(v => v.lang.startsWith('en'));
-      voiceSelect.innerHTML = '';
-      voices.forEach((voice, index) => {
-        const option = document.createElement('option');
-        option.textContent = `${voice.name} (${voice.lang})`;
-        option.value = index;
-        voiceSelect.appendChild(option);
-      });
+    // Автоматичний вибір найбільш природного англійського голосу
+    function setupBestVoice() {
+      const voices = synth.getVoices().filter(v => v.lang.startsWith('en'));
+      // Шукаємо преміум, природні або гуглівські голоси в системі
+      selectedVoice = voices.find(v => v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Oliver')) || voices[0];
     }
 
-    populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = populateVoiceList;
+    setupBestVoice();
+    if (synth.onvoiceschanged !== undefined) {
+      synth.onvoiceschanged = setupBestVoice;
     }
 
-    // Озвучення та ефект друку
     function playMemory(text) {
       currentText = text;
-      synth.cancel(); // Зупинити поточне мовлення
+      synth.cancel();
 
       // Ефект друку тексту
       captionEl.textContent = "";
@@ -245,18 +226,17 @@
         } else {
           clearInterval(typeInterval);
         }
-      }, 30);
+      }, 25);
 
-      // Синтез мовлення
+      // Озвучення з нормальною швидкістю (rate = 1.0)
       const utterance = new SpeechSynthesisUtterance(text);
-      if (voices[voiceSelect.value]) {
-        utterance.voice = voices[voiceSelect.value];
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
       }
-      utterance.rate = currentSpeed;
+      utterance.rate = 1.0; 
       synth.speak(utterance);
     }
 
-    // Обробники подій для предметів
     document.querySelectorAll('.hotspot').forEach(item => {
       item.addEventListener('click', () => {
         const memoryText = memories[item.id];
@@ -264,13 +244,6 @@
       });
     });
 
-    // Зміна швидкості
-    speedBtn.addEventListener('click', () => {
-      currentSpeed = currentSpeed === 1.0 ? 0.75 : 1.0;
-      speedBtn.textContent = `${currentSpeed}x`;
-    });
-
-    // Повтор
     replayBtn.addEventListener('click', () => {
       if (currentText) playMemory(currentText);
     });
