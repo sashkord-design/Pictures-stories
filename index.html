@@ -91,93 +91,115 @@
     #oranges  { top: 33%; left: 83%; width: 14%; height: 18%; }
 
     /* ==========================================
-       АНИМАЦІЇ ДЛЯ «ЖИВОЇ» КАРТИНИ
+       АНІМАЦІЇ
        ========================================== */
 
-    /* 1. Анімація дихання кота */
-    .cat-breathing-layer {
+    /* 1. Дихання кота (плавне м'яке пульсування поверх тіла кота) */
+    .cat-breath-overlay {
       position: absolute;
-      top: 67%;
+      top: 66%;
       left: 15%;
-      width: 16%;
-      height: 19%;
+      width: 15%;
+      height: 18%;
+      border-radius: 50%;
+      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.12);
       pointer-events: none;
-      animation: breathe 3.5s ease-in-out infinite;
-      transform-origin: bottom center;
+      animation: catBreathe 3.2s ease-in-out infinite;
+      z-index: 3;
     }
 
-    @keyframes breathe {
-      0%, 100% { transform: scaleY(1); }
-      50%      { transform: scaleY(1.03) translateY(-1px); }
+    @keyframes catBreathe {
+      0%, 100% { transform: scale(1) translateY(0); opacity: 0.2; }
+      50%      { transform: scale(1.05) translateY(-2px); opacity: 0.45; }
     }
 
-    /* 2. Анімація пари з чайника */
+    /* 2. Загальний клас для пари */
     .steam-container {
       position: absolute;
-      top: 21%;
-      left: 28.5%;
-      width: 30px;
-      height: 50px;
       pointer-events: none;
       z-index: 5;
+    }
+
+    /* Пара з чайника */
+    .kettle-steam {
+      top: 21%;
+      left: 28.5%;
+      width: 20px;
+      height: 45px;
+    }
+
+    /* Пара з чашки */
+    .cup-steam {
+      top: 27%;
+      left: 50.5%;
+      width: 16px;
+      height: 35px;
     }
 
     .steam-particle {
       position: absolute;
       bottom: 0;
-      width: 8px;
-      height: 25px;
-      background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+      width: 6px;
+      height: 20px;
+      background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 75%);
       border-radius: 50%;
-      filter: blur(3px);
-      animation: riseAndFade 3s infinite linear;
+      filter: blur(2px);
+      animation: riseAndFade 2.6s infinite ease-out;
       opacity: 0;
     }
 
-    .steam-particle:nth-child(1) { left: 4px;  animation-delay: 0s; }
-    .steam-particle:nth-child(2) { left: 12px; animation-delay: 1s; }
-    .steam-particle:nth-child(3) { left: 8px;  animation-delay: 2s; }
+    .steam-particle:nth-child(1) { left: 2px;  animation-delay: 0s; }
+    .steam-particle:nth-child(2) { left: 8px;  animation-delay: 0.9s; }
+    .steam-particle:nth-child(3) { left: 5px;  animation-delay: 1.7s; }
 
     @keyframes riseAndFade {
       0% {
         transform: translateY(0) scaleX(1);
         opacity: 0;
       }
-      20% {
-        opacity: 0.45;
+      25% {
+        opacity: 0.6;
       }
       100% {
-        transform: translateY(-40px) scaleX(2.2);
+        transform: translateY(-35px) scaleX(2.4);
         opacity: 0;
       }
     }
 
-    /* 3. Анімація пташки за вікном */
+    /* 3. Зона вікна (щоб пташка пролітала виключно в межах скла) */
+    .window-area {
+      position: absolute;
+      top: 0%;
+      left: 70%;
+      width: 30%;
+      height: 45%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .bird {
       position: absolute;
-      top: 28%;
-      right: -30px;
-      width: 18px;
-      height: 12px;
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0.6;
+      top: 35%;
+      right: -25px;
+      width: 16px;
+      height: 10px;
+      opacity: 0;
     }
 
     .bird-fly {
-      animation: flyAcross 6s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+      animation: flyInWindow 4.5s linear forwards;
     }
 
-    @keyframes flyAcross {
+    @keyframes flyInWindow {
       0% {
-        transform: translateX(0) translateY(0) scale(0.7);
+        transform: translateX(0) translateY(0) scale(0.6);
         opacity: 0;
       }
-      10% { opacity: 0.6; }
-      50% { transform: translateX(-180px) translateY(-15px) scale(0.85); }
-      90% { opacity: 0.6; }
+      15% { opacity: 0.7; }
+      85% { opacity: 0.7; }
       100% {
-        transform: translateX(-350px) translateY(-5px) scale(0.6);
+        transform: translateX(-220px) translateY(-20px) scale(0.5);
         opacity: 0;
       }
     }
@@ -253,20 +275,30 @@
 
   <div class="app-container">
     <div class="canvas-container">
-      <!-- Анімований шар дихання кота -->
-      <div class="cat-breathing-layer"></div>
+      
+      <!-- Зона вікна для пташки -->
+      <div class="window-area">
+        <svg class="bird" id="birdSvg" viewBox="0 0 24 16" fill="rgba(40, 50, 60, 0.75)">
+          <path d="M0,6 Q6,0 12,6 Q18,0 24,6 Q16,10 12,14 Q8,10 0,6 Z"/>
+        </svg>
+      </div>
+
+      <!-- Ефект дихання кота -->
+      <div class="cat-breath-overlay"></div>
 
       <!-- Пара з чайника -->
-      <div class="steam-container">
+      <div class="steam-container kettle-steam">
         <div class="steam-particle"></div>
         <div class="steam-particle"></div>
         <div class="steam-particle"></div>
       </div>
 
-      <!-- Силует пташки за вікном -->
-      <svg class="bird" id="birdSvg" viewBox="0 0 24 16" fill="rgba(60, 70, 80, 0.7)">
-        <path d="M0,6 Q6,0 12,6 Q18,0 24,6 Q16,10 12,14 Q8,10 0,6 Z"/>
-      </svg>
+      <!-- Пара з чашки -->
+      <div class="steam-container cup-steam">
+        <div class="steam-particle"></div>
+        <div class="steam-particle"></div>
+        <div class="steam-particle"></div>
+      </div>
 
       <!-- Hotspots -->
       <div class="hotspot" id="cat"></div>
@@ -351,21 +383,18 @@
       if (currentText) playMemory(currentText);
     });
 
-    // Пеperiodичний запуск польоту пташки за вікном
+    // Запуск польоту пташки суто за вікном
     const bird = document.getElementById('birdSvg');
     function triggerBirdFlight() {
       bird.classList.remove('bird-fly');
-      // Невеликий хак для перезапуску CSS-анімації
       void bird.offsetWidth; 
       bird.classList.add('bird-fly');
 
-      // Випадковий інтервал від 12 до 20 секунд для наступного польоту
-      const randomDelay = Math.floor(Math.random() * 8000) + 12000;
+      const randomDelay = Math.floor(Math.random() * 6000) + 10000;
       setTimeout(triggerBirdFlight, randomDelay);
     }
 
-    // Перший політ через 3 секунди після завантаження
-    setTimeout(triggerBirdFlight, 3000);
+    setTimeout(triggerBirdFlight, 2000);
   </script>
 </body>
 </html>
