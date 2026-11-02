@@ -23,7 +23,6 @@
       padding: 20px;
     }
 
-    /* Навігаційна шапка */
     header {
       width: 100%;
       max-width: 900px;
@@ -51,7 +50,6 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    /* Основний контейнер для картини */
     .app-container {
       width: 100%;
       max-width: 900px;
@@ -66,9 +64,8 @@
     .canvas-container {
       position: relative;
       width: 100%;
-      height: 500px; /* Фіксована комфортна висота, щоб бачити всю картину */
-      background: #2a2a2a url('kitchen.jpg') center/contain no-repeat;
-      background-color: #1a1a1a;
+      height: 500px;
+      background: #1a1a1a url('kitchen.jpg') center/contain no-repeat;
     }
 
     /* Інтерактивні точки (Hotspots) */
@@ -88,12 +85,14 @@
       transform: scale(1.02);
     }
 
-    /* Позиціонування зон на карті */
-    #bread { top: 68%; left: 55%; width: 14%; height: 12%; }
-    #cat { top: 62%; left: 28%; width: 10%; height: 12%; }
-    #cup { top: 65%; left: 48%; width: 6%; height: 9%; }
+    /* 6 клікабельних зон */
+    #bread   { top: 68%; left: 54%; width: 14%; height: 12%; }
+    #cat     { top: 62%; left: 28%; width: 10%; height: 12%; }
+    #cup     { top: 65%; left: 48%; width: 6%;  height: 9%;  }
+    #grinder { top: 60%; left: 78%; width: 8%;  height: 14%; }
+    #oranges { top: 58%; left: 65%; width: 10%; height: 11%; }
+    #kettle  { top: 48%; left: 57%; width: 8%;  height: 10%; }
 
-    /* Панель субтитрів та плеєра (знизу картини, на темному фоні) */
     .subtitle-panel {
       background: #181818;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -129,7 +128,6 @@
       min-height: 48px;
     }
 
-    /* Контроли плеєра */
     .controls {
       display: flex;
       align-items: center;
@@ -166,18 +164,20 @@
 
   <div class="app-container">
     <div class="canvas-container">
-      <!-- Клікабельні предмети -->
+      <!-- 6 предметів для натискання -->
       <div class="hotspot" id="bread" title="Click for a memory"></div>
       <div class="hotspot" id="cat" title="Click for a memory"></div>
       <div class="hotspot" id="cup" title="Click for a memory"></div>
+      <div class="hotspot" id="grinder" title="Click for a memory"></div>
+      <div class="hotspot" id="oranges" title="Click for a memory"></div>
+      <div class="hotspot" id="kettle" title="Click for a memory"></div>
     </div>
 
-    <!-- Панель історії / аудіо знизу -->
     <div class="subtitle-panel">
       <div class="subtitle-content">
         <div class="avatar">🎙️</div>
         <div class="text-box" id="captionText">
-          Click on any item in the kitchen to listen to a memory...
+          Click on any of the 6 items in the room to listen to a memory...
         </div>
       </div>
       <div class="controls">
@@ -187,10 +187,14 @@
   </div>
 
   <script>
+    // 6 різних англомовних спогадів
     const memories = {
       bread: "I can still smell the aroma of my grandmother's fresh-baked bread on early, crisp mornings. She always said it was the warmth, not the recipe, that made it perfect.",
       cat: "The old cat used to sit on that exact wooden chair all afternoon, chasing patches of sunlight as they moved across the floor.",
-      cup: "This cup of hot tea cooled down while I got lost reading an old letter from a friend I hadn't seen in years."
+      cup: "This cup of hot tea cooled down while I got lost reading an old letter from a friend I hadn't seen in years.",
+      grinder: "Every Sunday morning began with the rhythmic crunching sound of this hand coffee grinder filling the house with fresh roasted scent.",
+      oranges: "We bought these sweet oranges from a small street vendor near the harbor right after the rain had finally stopped.",
+      kettle: "That iron kettle has a quiet whistle that always reminded me of winter evenings spent by the warm stove."
     };
 
     let currentText = "";
@@ -200,10 +204,8 @@
     const synth = window.speechSynthesis;
     let selectedVoice = null;
 
-    // Автоматичний вибір найбільш природного англійського голосу
     function setupBestVoice() {
       const voices = synth.getVoices().filter(v => v.lang.startsWith('en'));
-      // Шукаємо преміум, природні або гуглівські голоси в системі
       selectedVoice = voices.find(v => v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Oliver')) || voices[0];
     }
 
@@ -216,7 +218,6 @@
       currentText = text;
       synth.cancel();
 
-      // Ефект друку тексту
       captionEl.textContent = "";
       let charIndex = 0;
       const typeInterval = setInterval(() => {
@@ -228,7 +229,6 @@
         }
       }, 25);
 
-      // Озвучення з нормальною швидкістю (rate = 1.0)
       const utterance = new SpeechSynthesisUtterance(text);
       if (selectedVoice) {
         utterance.voice = selectedVoice;
