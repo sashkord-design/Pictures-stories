@@ -68,7 +68,7 @@
       background: #1a1a1a url('kitchen.jpg') center/contain no-repeat;
     }
 
-    /* Невидимі зони: жодних рамок чи кольору у звичайному стані */
+    /* Повністю невидимі інтерактивні зони для квесту */
     .hotspot {
       position: absolute;
       border: none;
@@ -76,18 +76,17 @@
       cursor: pointer;
     }
 
-    /* При наведенні курсор змінюється на руку, рамки та фону немає */
     .hotspot:hover {
-      background: rgba(255, 215, 0, 0.05); /* Легке ледь помітне тепло, або можна зовсім прибрати */
+      background: rgba(255, 255, 255, 0.03);
     }
 
-    /* Точні позиції предметів */
-    #cat     { top: 62%; left: 16%; width: 15%; height: 26%; }
-    #kettle  { top: 25%; left: 27%; width: 9%;  height: 20%; }
-    #cup     { top: 51%; left: 47%; width: 10%; height: 16%; }
-    #bread   { top: 49%; left: 63%; width: 14%; height: 18%; }
-    #oranges { top: 41%; left: 74%; width: 11%; height: 18%; }
-    #grinder { top: 38%; left: 86%; width: 10%; height: 26%; }
+    /* Рівномірно розподілені предмети по всій глибині картини */
+    #plant    { top: 52%; left: 8%;  width: 11%; height: 24%; } /* Рослина на задньому плані зліва */
+    #painting { top: 22%; left: 45%; width: 10%; height: 16%; } /* Картина на стіні */
+    #cat      { top: 72%; left: 32%; width: 13%; height: 18%; } /* Сплячий кіт на підлозі */
+    #cup      { top: 40%; left: 62%; width: 8%;  height: 12%; } /* Чашка на поличці посередині */
+    #bread    { top: 78%; left: 70%; width: 14%; height: 15%; } /* Хліб на столі справа */
+    #bottle   { top: 30%; left: 84%; width: 7%;  height: 22%; } /* Пляшка на задній полиці */
 
     .subtitle-panel {
       background: #181818;
@@ -154,25 +153,26 @@
 
   <header>
     <button class="nav-btn">‹ Previous Scene</button>
-    <span>Page: <strong>Kitchen</strong></span>
+    <span>Page: <strong>Kitchen Quest</strong></span>
     <button class="nav-btn">Next Scene (Beach) ›</button>
   </header>
 
   <div class="app-container">
     <div class="canvas-container">
+      <!-- 6 схованих предметів для квесту -->
+      <div class="hotspot" id="plant"></div>
+      <div class="hotspot" id="painting"></div>
       <div class="hotspot" id="cat"></div>
-      <div class="hotspot" id="kettle"></div>
       <div class="hotspot" id="cup"></div>
       <div class="hotspot" id="bread"></div>
-      <div class="hotspot" id="oranges"></div>
-      <div class="hotspot" id="grinder"></div>
+      <div class="hotspot" id="bottle"></div>
     </div>
 
     <div class="subtitle-panel">
       <div class="subtitle-content">
         <div class="avatar">🎙️</div>
         <div class="text-box" id="captionText">
-          Explore the room and click on items to listen to memories...
+          Search the room and hover over hidden objects to uncover the story...
         </div>
       </div>
       <div class="controls">
@@ -183,12 +183,12 @@
 
   <script>
     const memories = {
-      cat: "The old cat used to sit on that exact wooden chair all afternoon, chasing patches of sunlight as they moved across the floor.",
-      kettle: "That iron kettle has a quiet whistle that always reminded me of winter evenings spent by the warm stove.",
-      cup: "This cup of hot tea cooled down while I got lost reading an old letter from a friend I hadn't seen in years.",
-      bread: "I can still smell the aroma of my grandmother's fresh-baked bread on early, crisp mornings. She always said it was the warmth, not the recipe, that made it perfect.",
-      oranges: "We bought these sweet oranges from a small street vendor near the harbor right after the rain had finally stopped.",
-      grinder: "Every Sunday morning began with the rhythmic crunching sound of this hand coffee grinder filling the house with fresh roasted scent."
+      plant: "That potted plant by the window survived three winters, watered mostly with leftover tea and quiet conversations.",
+      painting: "A small watercolor landscape framed in simple wood, reminding me of a summer trip we took decades ago.",
+      cat: "The old cat found the warmest spot on the wooden floor right where the afternoon sun creates a golden puddle.",
+      cup: "A porcelain cup left half-full, holding the quiet memory of a morning that passed too quickly.",
+      bread: "A crust of rustic bread resting on the table, waiting for the evening soup and shared stories.",
+      bottle: "An old glass bottle catching the faint amber light from the high shelf, filled with herbal oil."
     };
 
     let currentText = "";
